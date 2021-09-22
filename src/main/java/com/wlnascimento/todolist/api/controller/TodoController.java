@@ -14,6 +14,7 @@ import com.wlnascimento.todolist.domain.model.Todo;
 import com.wlnascimento.todolist.domain.repository.TodoRepository;
 import com.wlnascimento.todolist.domain.service.CadastroTodoService;
 
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("todo-list")
 public class TodoController {
@@ -45,6 +46,20 @@ public class TodoController {
     @ResponseStatus(HttpStatus.CREATED)
     public Todo create(@Valid @RequestBody Todo todo) {
         return todoService.create(todo);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Todo> update(@PathVariable Long id, @RequestBody Todo todo) {
+        if (todo.getId() != id) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (!todoRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        todo.setId(id);
+        todoService.create(todo);
+
+        return ResponseEntity.ok(todo);
     }
 
     @DeleteMapping("/{id}")
