@@ -20,21 +20,17 @@ import com.wlnascimento.todolist.domain.service.CadastroTodoService;
 public class TodoController {
 
     @Autowired
-    private TodoRepository todoRepository;
-
-    @Autowired
     private CadastroTodoService todoService;
-
 
     @GetMapping()
     public List<Todo> findAll() {
-        return todoRepository.findAll();
+        return todoService.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Todo> findById(@PathVariable Long id) {
 
-        Optional<Todo> todo = todoRepository.findById(id);
+        Optional<Todo> todo = todoService.findById(id);
 
         if (todo.isPresent()) {
             return ResponseEntity.ok(todo.get());
@@ -53,7 +49,8 @@ public class TodoController {
         if (todo.getId() != id) {
             return ResponseEntity.badRequest().build();
         }
-        if (!todoRepository.existsById(id)) {
+
+        if (!todoService.existeById(id)) {
             return ResponseEntity.notFound().build();
         }
         todo.setId(id);
@@ -64,7 +61,7 @@ public class TodoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        if (!todoRepository.existsById(id)) {
+        if (!todoService.existeById(id)) {
             return ResponseEntity.notFound().build();
         }
         todoService.delete(id);
