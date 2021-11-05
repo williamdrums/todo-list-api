@@ -1,10 +1,10 @@
 package com.wlnascimento.todolist.domain.exception;
 
-public class TodoException extends RuntimeException {
+public class RegraNegocioException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public TodoException(String message) {
+    public RegraNegocioException(String message) {
         super(message);
     }
 }
