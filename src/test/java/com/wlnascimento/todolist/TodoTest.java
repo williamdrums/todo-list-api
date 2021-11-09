@@ -33,7 +33,7 @@ public class TodoTest {
     }
 
     @Test
-    public void whenToGetAllTheTasks(){
+    public void whenToGetAllTheTasks_thenOk(){
         Response response = RestAssured.get(API_ROOT);
 
         assertEquals(HttpStatus.OK.value(),response.getStatusCode());
